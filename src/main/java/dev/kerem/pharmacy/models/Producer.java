@@ -7,7 +7,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@Entity
+@Table(name = "producers")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Producer {
 
 	@Id
@@ -106,7 +110,5 @@ public class Producer {
                 ", phone='" + phone + '\'' +
                 '}';
 	}
-	
-	
 	
 }

@@ -47,8 +47,5 @@ public class AddMedicineDto {
                 ", description='" + description + '\'' +
                 '}';
 	}
-	
-	
-	
-	
+
 }
