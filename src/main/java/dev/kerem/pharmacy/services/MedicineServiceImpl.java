@@ -24,4 +24,12 @@ public class MedicineServiceImpl implements MedicineService {
 		return medicineRepository.count();
 	}
 
+	@Override
+	public List<Medicine> search(String keyword) {
+		if (keyword != null && keyword.length() > 3) {
+			return medicineRepository.search(keyword);
+		}
+		return null;
+	}
+
 }

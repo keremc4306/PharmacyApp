@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<div th:fragment="sidebar">
+		<div class="w-54 flex flex-col justify-between bg-sky-900 h-screen text-white">
+			<div>
+				<div class="px-2 py-4 text-center">
+					<a class="font-extrabold text-white" href="/" title="Anasayfa">Eczanem</a>
+				</div>
+				<div class="px-2 py-2 border-b border-blue-100 mb-10">
+					<form th:action="@{/search}" class="flex flex-col">
+						<input type="text" name="keyword" id="keyword" size="30" th:value="${keyword}" required
+							   class="bg-gray-100 text-gray-900 border-none rounded px-1 py-1"
+							   title="İlaç adı ve ilaç üreticisi üzerinden arama yapın">
+						<button type="submit"
+								class="border border-white mt-2 py-1 rounded text-white text-center items-center hover:bg-cyan-600">
+							Ara
+						</button>
+					</form>
+				</div>
+				
+				<div class="px-2 py-2 hover:bg-cyan-600 hover:text-white">
+					<a href="/producers/" class="hover:underline">
+						İlaç Üreticileri
+					</a>
+				</div>
+				
+				<div class="px-2 py-2 hover:bg-cyan-600 hover:text-white">
+					<a href="/medicines/" class="hover:underline">
+						İlaçlar
+					</a>
+				</div>
+			</div>
+			
+			<div class="flex justify-between items-center px-2 py-2">
+				<span class="text-xs" th:text="${#authentication.name}"></span>
+				<span class="px-2 py-1 rounded text-white">
+					<a href="/logout" title="Çıkış Yap">
+						<div th:replace="fragments/svg/icons :: logoutIcon"></div>
+					</a>
+				</span>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

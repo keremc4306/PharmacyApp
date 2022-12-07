@@ -24,5 +24,13 @@ public class ProducerServiceImpl implements ProducerService {
 		return producerRepository.count();
 	}
 
+	@Override
+	public List<Producer> search(String keyword) {
+		if (keyword != null && keyword.length() > 3) {
+			return producerRepository.search(keyword);
+		}
+		return null;
+	}
+
 	
 }
