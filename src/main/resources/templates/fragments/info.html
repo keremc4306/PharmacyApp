@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div th:fragment="info">
+	<div class="w-5/6 mx-auto flex flex-col justify-start text-left py-4 bg-slate-100">
+		<h2 class="font-bold text-center mt-1">Eczanem Uygulamasına Hoşgeldiniz</h2>
+		<h3 class="font-bold text-left my-2">Uygulama Hakkında</h3>
+		<p>Bu uygulama iki farklı kullanıcı tipi ile bir eczanedeki ilaçların satışı sırasında olabilecek fonksiyonları karşılamayı amaçlamıştır.</p>
+		<p>Uygulama, "ADMIN" ve "USER" olmak üzere 2 farklı rolde kullanılabilmektedir.</p>
+		<p>"USER" rolü ilaç üreticisi oluşturma, düzenleme, görüntüleme ve ilaç üreticisine kayıtlı ilaç oluşturma, düzenleme, görüntüleme ve silme yetkilerine sahiptir.</p>
+		<p>"ADMIN" rolü "USER" rolünün yetkilerine sahip olmaya ek olarak ilaç üreticisi silme yetkisine sahiptir.</p>
+		
+		<h4 class="font-bold text-left my-2">Giriş</h4>
+		<div class="flex flex-col">
+			<p>"ADMIN" rolü için kullanıcı adı <span class="font-bold">admin</span> şifre <span class="font-bold">admin</span></p>
+            <p>"USER" rolü için kullanıcı adı <span class="font-bold">user</span> şifre <span class="font-bold">pass</span></p>
+		</div>
+		<h4 class="font-bold text-left my-2">İkonlar</h4>
+		
+		<p class="flex m-2"><span class="mr-2" th:insert="fragments/svg/icons :: showIcon"></span>: İlgili Kaydın Detaylarını Göster</p>
+
+        <p class="flex m-2"><span class="mr-2" th:insert="fragments/svg/icons :: editIcon"></span>: İlgili Kaydı Düzenleme</p>
+
+        <p class="flex m-2"><span class="flex mr-2" th:insert="fragments/svg/icons :: addProducerIcon"></span>: İlaç Üreticisi Oluşturma</p>
+
+        <p class="flex m-2"><span class="mr-2" th:insert="fragments/svg/icons :: addMedicineIcon"></span>: İlgili İlaç Üreticisi İçin İlaç Oluşturma</p>
+
+        <p class="flex m-2"><span class="mr-2" th:insert="fragments/svg/icons :: deleteIcon"></span>: İlgili Kaydı Silme</p>
+
+        <p class="flex m-2"><span class="mr-2 bg-cyan-700 rounded-full p-1" th:insert="fragments/svg/icons :: loginIcon"></span>: Giriş Yap</p>
+
+        <p class="flex m-2"><span class="mr-2  bg-cyan-700 rounded-full p-1" th:insert="fragments/svg/icons :: logoutIcon"></span>: Çıkış Yap</p>
+        
+        <h3 class="font-bold text-left my-2">Kullanılan Teknolojiler</h3>
+        <p>Spring Boot</p>
+        <p>Maven</p>
+        <p>Spring Mvc</p>
+        <p>Spring Security</p>
+        <p>Spring JPA</p>
+        <p>MySQL Database</p>
+        <p>Javax Validation</p>
+        <p>Thymeleaf</p>
+        <p>Tailwind CSS</p>
+	</div>
+</div>
+</body>
+</html>
