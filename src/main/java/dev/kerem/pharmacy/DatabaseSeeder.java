@@ -27,7 +27,7 @@ public class DatabaseSeeder implements ApplicationRunner {
 		if (userRepository.findAll().size() == 0) {
 			User admin = new User();
 			admin.setUsername("admin");
-			admin.setPassword(passwordEncoder.encode("admin"));
+			admin.setPassword(passwordEncoder.encode("pass"));
 			admin.setRole(Constant.ADMIN);
 			
 			User producer = new User();

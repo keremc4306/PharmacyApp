@@ -2,8 +2,6 @@ package dev.kerem.pharmacy;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -23,21 +21,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Bean
-	public DaoAuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-		authProvider.setUserDetailsService(userDetailsService());
-		authProvider.setPasswordEncoder(getPasswordEncoder());
-		return authProvider;
-	}
-	
-	@Bean
 	public PasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder(10);
-	}
-	
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(authenticationProvider());
 	}
 	
 	@Override
@@ -54,7 +39,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.and()
 			.logout()
 			.logoutSuccessUrl("/")
-			.permitAll()
-			.and().csrf().disable();
+			.permitAll().and()
+			.userDetailsService(userDetailsService())
+			.csrf().disable();
 	}
 }

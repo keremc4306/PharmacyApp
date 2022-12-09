@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="tr">
+
+<head th:replace="fragments/head :: head"></head>
+
+<body class="bg-slate-100">
+	
+	<div class="flex-col w-full mx-auto" sec:authorize="isAnonymous()">
+		<div th:insert="fragments/navbar.html :: navbar"></div>
+		<div th:insert="fragments/info.html :: info"></div>
+	</div>
+	
+	<div sec:authorize="hasAuthority('ADMIN') || hasAuthority('USER')">
+		<div class="flex">
+			<div th:insert="fragments/sidebar.html :: sidebar"></div>
+			<div class="flex-col w-full high-screen bg-slate-100">
+				<div th:insert="fragments/header.html :: header('Eczanem Anasayfa')"></div>
+				
+				<div class="flex w-4/6 mx-auto mt-10 justify-between items-center">
+					<div class="text-center">
+						<h4>Kayıtlı ilaç üreticisi sayısı</h4>
+						<span th:text="${producerCount}" class="text-3xl mt-2 font-bold"></span>
+					</div>
+					<div class="text-center">
+						<h4>Kayıtlı ilaç sayısı</h4>
+						<span th:text="${medicineCount}" class="text-3xl mt-2 font-bold"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>
