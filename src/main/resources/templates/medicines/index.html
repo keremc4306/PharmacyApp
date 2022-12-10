@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="tr">
+
+<head th:replace="fragments/head :: head"></head>
+
+<body>
+	<div class="flex">
+        <div th:insert="fragments/sidebar.html :: sidebar"></div>
+        <div class="flex-col w-full h-screen bg-slate-100">
+            <div th:insert="fragments/header.html :: header('Kayıtlı İlaçlar')"></div>
+
+            <div th:if="${medicines.size() != 0}">
+                <div class="w-4/6 mx-auto mt-10 overflow-y-auto max-h-96">
+                    <table class="w-full">
+                        <thead class="border-b border-blue-800">
+                            <tr>
+                                <th class="text-left">İsim</th>
+                                <th class="text-left">Tür</th>
+                                <th class="text-left">Fiyat (TL)</th>
+                                <th class="text-left">Üretici</th>
+                                <th class="text-left">Seçenekler</th>
+                            </tr>
+                        </thead>
+                        <tbody th:each="medicine : ${medicines}">
+                            <tr class="border-b border-blue-200">
+                                <td th:text="${medicine.getName()}" class="py-4"></td>
+                                <td th:text="${medicine.getType()}"></td>
+                                <td th:text="${medicine.getPrice()}"></td>
+                                <td th:text="${medicine.getProducer().getFirstName()}"></td>
+                                <td class="flex items-center py-4"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
