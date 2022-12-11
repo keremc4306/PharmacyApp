@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="tr">
+<head th:replace="fragments/head :: head"></head>
+
+<body>
+    <div class="flex">
+        <div th:insert="fragments/sidebar.html :: sidebar"></div>
+        <div class="w-full bg-slate-100">
+            <div th:insert="fragments/header.html :: header('Kayıtlı İlaç Üreticileri')"></div>
+
+            <a href="/producers/create" title="İlaç Üreticisi Ekle" class="flex absolute top-20 right-20">
+                <span th:replace="fragments/svg/icons :: addProducerIcon"></span>
+            </a>
+
+        <div th:if="${producers.size() != 0}">
+            <div class="w-4/6 mx-auto mt-10">
+                <table class="w-full overflow-y-auto max-h-96">
+                    <thead class="border-b border-blue-800">
+                        <tr>
+                            <th class="text-left">İsim</th>
+                            <th class="text-left">Soyisim</th>
+                            <th class="text-left">Email</th>
+                            <th class="text-left">İlaç Sayısı</th>
+                            <th class="text-left">Seçenekler</th>
+                        </tr>
+                    </thead>
+                    <tbody th:each="owner : ${owners}">
+                        <tr class="border-b border-blue-200">
+                            <td th:text="${producer.getFirstName()}" class="py-4"></td>
+                            <td th:text="${producer.getLastName()}"></td>
+                            <td th:text="${producer.getEmail()}"></td>
+                            <td th:text="${producer.getMedicines().size()}"></td>
+                            <td class="flex items-center py-4">
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="text-center mt-10" th:unless="${producers.size() != 0}">Henüz kayıtlı ilaç üreticisi yok!</div>
+        </div>
+    </div>
+</body>
+</html>

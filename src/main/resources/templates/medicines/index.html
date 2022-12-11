@@ -27,12 +27,15 @@
                                 <td th:text="${medicine.getType()}"></td>
                                 <td th:text="${medicine.getPrice()}"></td>
                                 <td th:text="${medicine.getProducer().getFirstName()}"></td>
-                                <td class="flex items-center py-4"></td>
+                                <td class="flex items-center py-4">
+                                    
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+            <div class="text-center mt-10" th:unless="${medicines.size() != 0}">Henüz kayıtlı ilaç yok!</div>
         </div>
     </div>
 </body>
