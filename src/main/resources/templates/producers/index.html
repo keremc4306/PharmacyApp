@@ -8,7 +8,7 @@
         <div class="w-full bg-slate-100">
             <div th:insert="fragments/header.html :: header('Kayıtlı İlaç Üreticileri')"></div>
 
-            <a href="/producers/create" title="İlaç Üreticisi Ekle" class="flex absolute top-20 right-20">
+            <a href="/producers/create" title="İlaç Üretici Bilgisi Ekle" class="flex absolute top-20 right-20">
                 <span th:replace="fragments/svg/icons :: addProducerIcon"></span>
             </a>
 
@@ -24,14 +24,27 @@
                             <th class="text-left">Seçenekler</th>
                         </tr>
                     </thead>
-                    <tbody th:each="owner : ${owners}">
+                    <tbody th:each="producer : ${producers}">
                         <tr class="border-b border-blue-200">
                             <td th:text="${producer.getFirstName()}" class="py-4"></td>
                             <td th:text="${producer.getLastName()}"></td>
                             <td th:text="${producer.getEmail()}"></td>
                             <td th:text="${producer.getMedicines().size()}"></td>
                             <td class="flex items-center py-4">
-
+                                <a th:href="@{/producers/show/{id}(id=${producer.getId()})}"  title="Göster" class="">
+                                    <span th:replace="fragments/svg/icons :: showIcon"></span>
+                                </a>
+                                <a th:href="@{/producers/edit/{id}(id=${producer.getId()})}" class="ml-2" title="Düzenle">
+                                    <span th:replace="fragments/svg/icons :: editIcon"></span>
+                                </a>
+                                <a th:href="@{/producers/{id}/medicines/create(id=${producer.getId()})}" class="ml-2" title="İlaç Ekle">
+                                    <span th:replace="fragments/svg/icons :: addMedicineIcon"></span>
+                                </a>
+                                <form class="ml-2" sec:authorize="hasAuthority('ADMIN')" id="producerIndexDeleteForm" th:method="post" th:action="@{/admin/producers/delete/{id}(id=${producer.getId()})}">
+                                    <button type="submit" title="Sil">
+                                        <span th:replace="fragments/svg/icons :: deleteIcon"></span>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     </tbody>
@@ -41,5 +54,12 @@
         <div class="text-center mt-10" th:unless="${producers.size() != 0}">Henüz kayıtlı ilaç üreticisi yok!</div>
         </div>
     </div>
+    <script th:inline="javascript">
+        document.getElementById("producerIndexDeleteForm").addEventListener("click", function (event){
+            if (confirm("Bu Kayıt Silinecek!") == false) {
+                event.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>
