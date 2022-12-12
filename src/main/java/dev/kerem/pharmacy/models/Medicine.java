@@ -23,7 +23,6 @@ public class Medicine {
 	private String type;
 	
 	@Column(name = "med_price", nullable = false)
-	@NotEmpty(message = "Lütfen ilacın fiyatını giriniz!")
 	private double price;
 	
 	@Column(name = "description", nullable = false, length = 100)

@@ -29,12 +29,26 @@
                     <a th:href="@{/producers/edit/{id}(id=${producer.getId()})}"  title="Düzenle">
                         <span th:replace="fragments/svg/icons :: editIcon"></span>
                     </a>
-                    <a th:href="@{/producers/{id}/medicines/create(id=${producer.getId()})}" title="Üretici Ekle" class="mt-2">
-                        <span th:replace="fragments/svg/icons :: addProducerIcon"></span>
+                    <a th:href="@{/producers/{id}/medicines/create(id=${producer.getId()})}" title="İlaç Ekle" class="mt-2">
+                        <span th:replace="fragments/svg/icons :: addMedicineIcon"></span>
                     </a>
+                    <form sec:authorize="hasAuthority('ADMIN')" id="producerShowDeleteForm" th:method="post" th:action="@{/admin/producers/delete/{id}(id=${producer.getId()})}">
+                        <button type="submit" title="Sil">
+                            <span th:replace="fragments/svg/icons :: deleteIcon"></span>
+                        </button>
+                    </form>
                 </div>
             </div>
+            <div class="text-center m-4 w-full">İlaçlar</div>
+            <div th:insert="fragments/medicineList.html :: medicineList(medicines=${medicines}, producer=${producer})"></div>
         </div>
     </div>
+    <script th:inline="javascript">
+        document.getElementById("producerShowDeleteForm").addEventListener("click", function (event) {
+            if (confirm("Bu Kayıt Silinecek!") == false) {
+                event.preventDefault();
+            }
+        })
+    </script>
 </body>
 </html>

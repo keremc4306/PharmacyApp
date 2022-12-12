@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="tr">
+
+<head th:replace="fragments/head :: head"></head>
+
+<body>
+    <div class="flex">
+        <div th:insert="fragments/sidebar.html :: sidebar"></div>
+        <div class="flex-col w-full h-screen bg-slate-100">
+            <div th:insert="fragments/header.html :: header('İlaç Bilgisi Düzenle')"></div>
+            <div class="w-4/6 mx-auto flex-col justify-start mt-10">
+                <form action="#" th:action="@{/producers/{producerId}/medicines/edit/{medicineId} (producerId=${producer.getId()}, medicineId=${medicine.getId()})}" th:object="${medicine}" method="post" class="w-full mx-auto mt-10">
+                    <div class="bg-red-200 rounded-lg px-2 py-2" th:if="${#fields.hasErrors('*')}">
+                        <p class="text-gray-900" th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+                    </div>
+                    <div class="mb-4">
+                        <input type="text" class="rounded px-1 py-3 w-full border border-gray-300" th:field="*{name}" placeholder="İsim" th:errorclass="is-invalid">
+                    </div>
+                    <div class="mb-4">
+                        <input type="text" class="rounded px-1 py-3 w-full border border-gray-300" th:field="*{type}" placeholder="Tür" th:errorclass="is-invalid">
+                    </div>
+                    <div class="mb-4">
+                        <input type="number" class="rounded px-1 py-3 w-full border border-gray-300" th:field="*{price}" placeholder="Fiyatı" th:errorclass="is-invalid">
+                    </div>
+                    <div class="mb-4">
+                        <input type="text" class="rounded px-1 py-3 w-full border border-gray-300" th:field="*{description}" placeholder="Açıklama" th:errorclass="is-invalid">
+                    </div>
+                    <div>
+                        <input type="submit" class="bg-cyan-700 rounded px-2 py-2 text-white w-full" value="Kaydet" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="tr">
+
+<head th:replace="fragments/head :: head"></head>
+
+<body>
+    <div class="flex">
+        <div th:insert="fragments/sidebar.html :: sidebar"></div>
+        <div class="flex-col w-full h-screen bg-slate-100">
+            <div th:insert="fragments/header.html :: header('İlaç Detay Bilgisi')"></div>
+            <div class="flex justify-between m-10  border-b border-blue-800">
+                <div class="flex">
+                    <div class="">
+                        <p>İsim:</p>
+                        <p>Üreticisi:</p>
+                        <p>Tür:</p>
+                        <p>Fiyatı:</p>
+                        <p>Açıklama:</p>
+                    </div>
+                    <div class="ml-2 font-bold">
+                        <p th:text="${medicine.getName()}"></p>
+                        <p th:text="${producer.getFirstName() + ' ' + producer.getLastName()}"></p>
+                        <p th:text="${medicine.getType()}"></p>
+                        <p th:text="${medicine.getPrice()}"></p>
+                        <p th:text="${medicine.getDescription()}"></p>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-between mb-2">
+                    <a th:href="@{/producers/{producerId}/medicines/edit/{medicineId}(producerId=${producer.getId()}, medicineId=${medicine.getId()})}" title="Düzenle">
+                        <span th:replace="fragments/svg/icons :: editIcon"></span>
+                    </a>
+                    <form th:method="post" id="medicineShowDeleteForm" th:action="@{/producers/{producerId}/medicines/delete/{medicineId}(producerId=${producer.getId()}, medicineId= ${medicine.getId()})}">
+                        <button type="submit" title="Sil">
+                            <span th:replace="fragments/svg/icons :: deleteIcon"></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        document.getElementById("medicineShowDeleteForm").addEventListener("click", function (event) {
+            if (confirm("Bu Kayıt Silinecek!") == false) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
