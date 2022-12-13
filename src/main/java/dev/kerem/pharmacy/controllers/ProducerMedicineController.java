@@ -34,7 +34,7 @@ public class ProducerMedicineController {
 		return "medicines/create";
 	}
 	
-	@GetMapping("/edit/{petId}")
+	@GetMapping("/edit/{medicineId}")
 	public String edit(@PathVariable Long producerId, @PathVariable Long medicineId, Model model) {
 		Producer producer = producerService.getById(producerId);
 		Medicine medicine = medicineService.getById(medicineId);
@@ -43,7 +43,7 @@ public class ProducerMedicineController {
 		return "medicines/edit";
 	}
 	
-	@GetMapping("/show/{petId}")
+	@GetMapping("/show/{medicineId}")
 	public String show(@PathVariable Long producerId, @PathVariable Long medicineId, Model model) {
 		Producer producer = producerService.getById(producerId);
 		Medicine medicine = medicineService.getById(medicineId);
@@ -66,5 +66,30 @@ public class ProducerMedicineController {
 		
 		model.addAttribute("message", "İlaç " + producer.getFirstName() + " için kaydedildi");
 		return "redirect:/producers/show/" + producer.getId();
+	}
+	
+	@PostMapping("/edit/{medicineId}")
+	public String update(@PathVariable Long producerId, Model model, @PathVariable Long medicineId, @Valid Medicine medicine, BindingResult bindingResult) {
+		Producer producer = producerService.getById(producerId);
+		model.addAttribute("producer", producer);
+		
+		
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("editMedicineForm", medicine);
+            return "medicines/edit";
+		}
+		
+		medicine.setId(medicineId);
+		medicineService.store(producer, medicine);
+		
+		model.addAttribute("message", "İlaç kaydı güncellendi!");
+        return "redirect:/producers/show/" + producerId;
+	}
+	
+	@PostMapping("/delete/{medicineId}")
+	public String delete(@PathVariable Long producerId, @PathVariable Long medicineId, Model model) {
+		medicineService.delete(medicineId);
+		model.addAttribute("message", "Kayıt silindi!");
+		return "redirect:/producers/show/" + producerId;
 	}
 }

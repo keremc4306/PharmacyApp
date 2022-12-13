@@ -16,7 +16,7 @@
                             <tr>
                                 <th class="text-left">İsim</th>
                                 <th class="text-left">Tür</th>
-                                <th class="text-left">Fiyat (TL)</th>
+                                <th class="text-left">Fiyatı (TL)</th>
                                 <th class="text-left">Üretici</th>
                                 <th class="text-left">Seçenekler</th>
                             </tr>
@@ -28,7 +28,17 @@
                                 <td th:text="${medicine.getPrice()}"></td>
                                 <td th:text="${medicine.getProducer().getFirstName()}"></td>
                                 <td class="flex items-center py-4">
-                                    
+                                    <a th:href="@{/producers/{producerId}/medicines/show/{medicineId}(producerId=${medicine.getProducer().getId()}, medicineId=${medicine.getId()})}" title="Göster">
+                                        <span th:replace="fragments/svg/icons :: showIcon"></span>
+                                    </a>
+                                    <a th:href="@{/producers/{producerId}/medicines/edit/{medicineId}(producerId=${medicine.getProducer().getId()}, medicineId=${medicine.getId()})}" lass="ml-2" title="Düzenle">
+                                        <span th:replace="fragments/svg/icons :: editIcon"></span>
+                                    </a>
+                                    <form th:method="post" id="medicineIndexDeleteForm" th:action="@{/producers/{producerId}/medicines/delete/{medicineId}(producerId=${medicine.getProducer().getId()}, medicineId=${medicine.getId()})}" class="ml-2">
+                                        <button type="submit" title="Sil">
+                                            <span th:replace="fragments/svg/icons :: deleteIcon"></span>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         </tbody>
@@ -38,5 +48,12 @@
             <div class="text-center mt-10" th:unless="${medicines.size() != 0}">Henüz kayıtlı ilaç yok!</div>
         </div>
     </div>
+    <script th:inline="javascript">
+        document.getElementById("medicineIndexDeleteForm").addEventListener("click", function (event) {
+            if (confirm("Bu Kayıt Silinecek!") == false) {
+                event.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>
