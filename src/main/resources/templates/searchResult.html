@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="tr">
+
+<head th:replace="fragments/head :: head"></head>
+
+<body>
+	<div class="flex">
+		<div th:insert="fragments/sidebar.html :: sidebar"></div>
+		<div class="w-full bg-slate-100">
+			<div th:insert="fragments/header.html :: header('Arama Sonuçları')"></div>
+
+			<div th:if="${producers.size() != 0}">
+				<div class="w-4/6 mx-auto mt-10">
+					<p class="text-center mb-2">Bulunan İlaç Üreticileri</p>
+					<table class="w-full overflow-y-auto max-h-96">
+						<thead class="border-b border-blue-800">
+							<tr>
+								<th class="text-left">İsim</th>
+								<th class="text-left">Soyisim</th>
+								<th class="text-left">Email</th>
+                            	<th class="text-left">Seçenekler</th>
+							</tr>
+						</thead>
+						<tbody th:each="producer: ${producers}">
+							<tr class="border-b border-gray-200">
+								<td th:text="${producer.getFirstName()}" class="py-4"></td>
+								<td th:text="${producer.getLastName()}"></td>
+								<td th:text="${producer.getEmail()}"></td>
+								<td class="flex items-center py-4">
+									<a th:href="@{/producers/show/{id}(id=${producer.getId()})}" title="Göster">
+										<span th:replace="fragments/svg/icons :: showIcon"></span>
+									</a>
+									<a th:href="@{/producers/edit/{id}(id=${producer.getId()})}" class="ml-2" title="Düzenle">
+										<span th:replace="fragments/svg/icons :: editIcon"></span>
+									</a>
+									<a th:href="@{/producers/{id}/medicines/create(id=${producer.getId()})}" class="ml-2" title="İlaç Ekle">
+										<span th:replace="fragments/svg/icons :: addMedicineIcon"></span>
+									</a>
+									<form class="ml-2" sec:authorize="hasAuthority('ADMIN')" id="producerSearchDeleteForm" th:method="post" th:action="@{/admin/producers/delete/{id}(id=${producer.getId()})}">
+										<button type="submit" title="Sil">
+											<span th:replace="fragments/svg/icons :: deleteIcon"></span>
+										</button>
+									</form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div th:if="${medicines.size() != 0}">
+				<div class="w-4/6 mx-auto mt-10 overflow-y-auto max-h-96 mt-5">
+					<p class="text-center mb-2">Bulunan İlaçlar</p>
+					<table class="w-full">
+						<thead class="border-b border-blue-800">
+							<tr>
+								<th class="text-left">İsim</th>
+								<th class="text-left">Tür</th>
+								<th class="text-left">Fiyat</th>
+								<th class="text-left">Üretici</th>
+								<th class="text-left">Seçenekler</th>
+							</tr>
+						</thead>
+						<tbody th:each="medicine: ${medicines}">
+							<tr class="border-b border-gray-200">
+								<td th:text="${medicine.getName()}" class="py-4"></td>
+								<td th:text="${medicine.getType()}"></td>
+								<td th:text="${medicine.getPrice()}"></td>
+								<td th:text="${medicine.getProducer().getFirstName()}"></td>
+								<td class="flex items-center py-4">
+									<a th:href="@{/producers/{producerId}/medicines/show/{medicineId}(producerId=${medicine.getProducer().getId()}, medicineId=${medicine.getId()})}" title="Göster">
+										<span th:replace="fragments/svg/icons :: showIcon"></span>
+									</a>
+									<a th:href="@{/producers/{producerId}/medicines/edit/{medicineId}(producerId=${medicine.getProducer().getId()}, medicineId=${medicine.getId()})}" class="ml-2" title="Düzenle">
+										<span th:replace="fragments/svg/icons :: editIcon"></span>
+									</a>
+									<form th:method="post" id="medicineSearchDeleteForm" th:action="@{/producers/{producerId}/medicines/delete/{medicineId}(producerId=${medicine.getProducer().getId()}, medicineId= ${medicine.getId()})}" class="ml-2">
+										<button type="submit" title="Sil">
+											<span th:replace="fragments/svg/icons :: deleteIcon"></span>
+										</button>
+									</form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="text-center mt-10" th:if="${medicines.size() == 0 && producers.size() == 0}">Bir şey bulunamadı</div>
+		</div>
+	</div>
+	<script th:inline="javascript">
+		document.getElementById("producerSearchDeleteForm").addEventListener("click", function (event) {
+			if (confirm("Bu Kayıt Silinecek!") == false) {
+            	event.preventDefault();
+        	}
+		});
+
+		document.getElementById("medicineSearchDeleteForm").addEventListener("click", function (event) {
+			if (confirm("Bu Kayıt Silinecek!") == false) {
+            	event.preventDefault();
+        	}
+		});
+	</script>
+</body>
+</html>
